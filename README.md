@@ -1,3 +1,6 @@
+# Elegoo Neptune 2 firmware source code
+## Below is the original README file for the MKS Robin
+
 # Mks-Robin-Nano-Marlin2.0-Firmware
 ## Features
 The firmware of MKS Robin Nano, based on [Marlin2.0.x](https://github.com/MarlinFirmware/Marlin), added the [LittlevGL](https://github.com/littlevgl/lvgl), supporting colourful GUI and touch screen. It is developed on PlatformIO, we hope more and more developers will participate the development of this repository.
