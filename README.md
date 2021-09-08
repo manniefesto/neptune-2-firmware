@@ -1,6 +1,3 @@
 # Elegoo Neptune 2 firmware source code
-Current issues
 
-The TFT icons are ugly :(
-
-The WiFi menu is enabled but does not work.
+This is the firmware source code that Elegoo support provided for me when I asked after some of the Marlin features that where not turned on in the stock version.
