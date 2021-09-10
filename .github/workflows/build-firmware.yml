@@ -29,3 +29,16 @@ jobs:
         pip install --upgrade platformio
     - name: Run PlatformIO
       run: pio run -e mks_robin_nano35
+
+    - name: Organize files for upload
+      shell: bash
+      run: |
+        mkdir -p artifact
+        cp .pio\build\mks_robin_nano35\firmware.bin artifact\elegoo.bin
+        cp -r .pio\build\mks_robin_nano35\assets artifact
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Neptune-2-Firmware
+        path: artifact
