@@ -3,6 +3,14 @@ This is the firmware source code that Elegoo support provided for me when I aske
 
 It seems that it is not 100% stock as the TFT images and options are different, however it does complie and run on the MKS Robin Nano main board that the printer uses.
 
+This project is not completed. Here is a todo list.
+
+# Todo:
+* Update Marlin (Currently on a 2.0.x bugfix build from 2019)
+* Investigate the changes to the TFT (LGVL)
+* Apply elegoo icons and splash screen
+* Create video explaining both build options
+
 # Building
 
 ## Option 1 - Github actions
