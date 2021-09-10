@@ -34,9 +34,7 @@ jobs:
       shell: bash
       run: |
         mkdir -p artifact
-        mkdir -p artifact/assets
         cp .pio/build/mks_robin_nano35/firmware.bin artifact/elegoo.bin
-        cp -r .pio/build/mks_robin_nano35/assets artifact/
 
     - name: Publish firmware artifacts
       uses: actions/upload-artifact@v2
