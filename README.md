@@ -38,3 +38,5 @@ Github are kind enough to provide unlimited compute to open source public projec
 6. Rename the firmware to elegoo.bin
 7. Place the firmware files on a SD card
 8. Insert the SD card into the printer and reset it
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/manniefesto)
