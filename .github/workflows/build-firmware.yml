@@ -39,5 +39,5 @@ jobs:
     - name: Publish firmware artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: elegoo.bin
+        name: Neptune 2 firmware
         path: artifact/elegoo.bin
