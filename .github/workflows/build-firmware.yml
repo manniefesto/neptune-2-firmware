@@ -34,11 +34,10 @@ jobs:
       shell: bash
       run: |
         mkdir -p artifact
-        cp .pio\build\mks_robin_nano35\firmware.bin artifact\elegoo.bin
-        cp -r .pio\build\mks_robin_nano35\assets artifact
+        cp .pio/build/mks_robin_nano35/firmware.bin artifact/elegoo.bin
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2
+    - name: Create release
+      uses: ncipollo/release-action@v1
       with:
-        name: Neptune-2-Firmware
-        path: artifact
+        artifacts: "artifact/elegoo.bin"
+        token: ${{ secrets.GITHUB_TOKEN }}
