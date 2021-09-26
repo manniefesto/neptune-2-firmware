@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (c) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,10 @@
 
 #define DEBUG_OUT ENABLED(DEBUG_TOUCH_CALIBRATION)
 #include "../../core/debug_out.h"
+
+#if ENABLED(TOUCH_CALIBRATION_AUTO_SAVE)
+  #include "../../module/settings.h"
+#endif
 
 TouchCalibration touch_calibration;
 
@@ -78,6 +82,7 @@ void TouchCalibration::validate_calibration() {
     SERIAL_ECHOLNPAIR("TOUCH_OFFSET_X ", calibration.offset_x);
     SERIAL_ECHOLNPAIR("TOUCH_OFFSET_Y ", calibration.offset_y);
     SERIAL_ECHO_TERNARY(calibration.orientation == TOUCH_LANDSCAPE, "TOUCH_ORIENTATION ", "TOUCH_LANDSCAPE", "TOUCH_PORTRAIT", "\n");
+    TERN_(TOUCH_CALIBRATION_AUTO_SAVE, settings.save());
   }
 }
 

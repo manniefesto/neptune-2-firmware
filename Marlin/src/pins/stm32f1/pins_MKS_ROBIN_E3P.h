@@ -22,12 +22,12 @@
 #pragma once
 
 /**
- * MKS Robin nano (STM32F130VET6) board pin assignments
+ * MKS Robin nano (STM32F103VET6) board pin assignments
  */
 
-#if NOT_TARGET(__STM32F1__)
-  #error "Oops! Select an STM32F1 board in 'Tools > Board.'"
-#elif HOTENDS > 1 || E_STEPPERS > 1
+#include "env_validate.h"
+
+#if HOTENDS > 1 || E_STEPPERS > 1
   #error "MKS Robin E3P only supports one hotend / E-stepper. Comment out this line to continue."
 #elif HAS_FSMC_TFT
   #error "MKS Robin E3P doesn't support FSMC-based TFT displays."
@@ -36,6 +36,10 @@
 #define BOARD_INFO_NAME "MKS Robin E3P"
 
 #define BOARD_NO_NATIVE_USB
+#define MKS_HARDWARE_TEST_ONLY_E0
+
+// Avoid conflict with TIMER_SERVO when using the STM32 HAL
+#define TEMP_TIMER                             5
 
 //
 // Release PB4 (Y_ENABLE_PIN) from JTAG NRST role
@@ -129,11 +133,17 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  MSerial1
-  //#define Y_HARDWARE_SERIAL  MSerial1
-  //#define Z_HARDWARE_SERIAL  MSerial1
-  //#define E0_HARDWARE_SERIAL MSerial1
-  //#define E1_HARDWARE_SERIAL MSerial1
+  //#define X_HARDWARE_SERIAL  Serial
+  //#define X2_HARDWARE_SERIAL Serial1
+  //#define Y_HARDWARE_SERIAL  Serial1
+  //#define Y2_HARDWARE_SERIAL Serial1
+  //#define Z_HARDWARE_SERIAL  Serial1
+  //#define Z2_HARDWARE_SERIAL Serial1
+  //#define E0_HARDWARE_SERIAL Serial1
+  //#define E1_HARDWARE_SERIAL Serial1
+  //#define E2_HARDWARE_SERIAL Serial1
+  //#define E3_HARDWARE_SERIAL Serial1
+  //#define E4_HARDWARE_SERIAL Serial1
 
   //
   // Software serial
@@ -172,31 +182,12 @@
 //
 // Misc. Functions
 //
-
-//#define MKSPWC
-#ifdef MKSPWC
-  #define SUICIDE_PIN                       PB2   // Enable MKSPWC SUICIDE PIN
-  #define SUICIDE_PIN_INVERTING             false // Enable MKSPWC PIN STATE
-  #define KILL_PIN                          PA2   // Enable MKSPWC DET PIN
-  #define KILL_PIN_STATE                    true  // Enable MKSPWC PIN STATE
-#endif
-
 #if HAS_TFT_LVGL_UI
-  // LVGL
-  #ifndef TOUCH_CALIBRATION_X
-    #define TOUCH_CALIBRATION_X           -17253
-  #endif
-  #ifndef TOUCH_CALIBRATION_Y
-    #define TOUCH_CALIBRATION_Y            11579
-  #endif
-  #ifndef TOUCH_OFFSET_X
-    #define TOUCH_OFFSET_X                   514
-  #endif
-  #ifndef TOUCH_OFFSET_Y
-    #define TOUCH_OFFSET_Y                   -24
-  #endif
-  #ifndef TOUCH_ORIENTATION
-    #define TOUCH_ORIENTATION    TOUCH_LANDSCAPE
+  #if ENABLED(PSU_CONTROL)                        // MKSPWC
+    #define SUICIDE_PIN                     PB2   // PW_OFF
+    #define SUICIDE_PIN_INVERTING          false
+    #define KILL_PIN                        PA2   // PW_DET
+    #define KILL_PIN_STATE                  HIGH
   #endif
 
   #define MT_DET_1_PIN                      PA4   // LVGL UI FILAMENT RUNOUT1 PIN
@@ -206,11 +197,9 @@
   #define WIFI_IO1_PIN                      PC7   // MKS ESP WIFI IO1 PIN
   #define WIFI_RESET_PIN                    PE9   // MKS ESP WIFI RESET PIN
 
-  //#define MKS_TEST
   #if ENABLED(MKS_TEST)
     #define MKS_TEST_POWER_LOSS_PIN         PA2   // PW_DET
     #define MKS_TEST_PS_ON_PIN              PB0   // PW_OFF
-    #define MKS_TEST_Z_MAX_PIN              PC4   // Z_MAX_PIN
   #endif
 #else
   //#define POWER_LOSS_PIN                  PA2   // PW_DET
@@ -224,31 +213,26 @@
 // SD Card
 //
 #ifndef SDCARD_CONNECTION
-  #define SDCARD_CONNECTION                 ONBOARD
+  #define SDCARD_CONNECTION              ONBOARD
 #endif
 
-#if SD_CONNECTION_IS(LCD)
-  #define ENABLE_SPI1
-  #define SD_DETECT_PIN                       PE12
-  #define SCK_PIN                             PA5
-  #define MISO_PIN                            PA6
-  #define MOSI_PIN                            PA7
-  #define SS_PIN                              PE10
-#elif SD_CONNECTION_IS(ONBOARD)
+#if SD_CONNECTION_IS(ONBOARD)
   #define SDIO_SUPPORT
-  #define SDIO_CLOCK                          4500000  // 4.5 MHz
-  #define SD_DETECT_PIN                       PD12
-  #define ONBOARD_SD_CS_PIN                   PC11
-#elif SD_CONNECTION_IS(CUSTOM_CABLE)
-  #error "No custom SD drive cable defined for this board."
+  #define SDIO_CLOCK                     4500000  // 4.5 MHz
+  #define SD_DETECT_PIN                     PD12
+  #define ONBOARD_SD_CS_PIN                 PC11
+#elif SD_CONNECTION_IS(LCD)
+  #define ENABLE_SPI1
+  #define SDSS                              PE10
+  #define SD_SCK_PIN                        PA5
+  #define SD_MISO_PIN                       PA6
+  #define SD_MOSI_PIN                       PA7
+  #define SD_DETECT_PIN                     PE12
 #endif
 
 //
 // LCD / Controller
 //
-#ifndef BEEPER_PIN
-  #define BEEPER_PIN                        PC5
-#endif
 
 /**
  * Note: MKS Robin TFT screens use various TFT controllers.
@@ -277,7 +261,7 @@
   #define TFT_MOSI_PIN                      PA7
   #define TFT_DC_PIN                        PD10
   #define TFT_RST_PIN                       PC6
-  #define TFT_A0_PIN                        TFT_DC_PIN
+  #define TFT_A0_PIN                  TFT_DC_PIN
 
   #define TFT_RESET_PIN                     PC6
   #define TFT_BACKLIGHT_PIN                 PD13
@@ -287,7 +271,6 @@
 
   #define LCD_USE_DMA_SPI
 
-  #define TFT_DRIVER                        ST7796
 #endif
 
 #if ENABLED(TFT_CLASSIC_UI)
@@ -302,17 +285,19 @@
 #endif
 
 #if HAS_WIRED_LCD && !HAS_SPI_TFT
-
-  // NON TFT Displays
+  #define BEEPER_PIN                        PC5
+  #define BTN_ENC                           PE13
+  #define LCD_PINS_ENABLE                   PD13
+  #define LCD_PINS_RS                       PC6
+  #define BTN_EN1                           PE8
+  #define BTN_EN2                           PE11
+  #define LCD_BACKLIGHT_PIN                 -1
 
   #if ENABLED(MKS_MINI_12864)
 
     // MKS MINI12864 and MKS LCD12864B
     // If using MKS LCD12864A (Need to remove RPK2 resistor)
 
-    #define BTN_ENC                         PE13
-    #define BTN_EN1                         PE8
-    #define BTN_EN2                         PE11
     #define LCD_BACKLIGHT_PIN               -1
     #define LCD_RESET_PIN                   -1
     #define DOGLCD_A0                       PD11
@@ -333,14 +318,22 @@
       #define BEEPER_PIN                    -1
     #endif
 
+  #elif ENABLED(MKS_MINI_12864_V3)
+    #define DOGLCD_CS                       PD13
+    #define DOGLCD_A0                       PC6
+    #define LCD_PINS_DC                DOGLCD_A0
+    #define LCD_BACKLIGHT_PIN               -1
+    #define LCD_RESET_PIN                   PE14
+    #define NEOPIXEL_PIN                    PE15
+    #define DOGLCD_MOSI                     PA7
+    #define DOGLCD_SCK                      PA5
+    #if SD_CONNECTION_IS(ONBOARD)
+      #define FORCE_SOFT_SPI
+    #endif
+	//#define LCD_SCREEN_ROT_180
+
   #else                                           // !MKS_MINI_12864
 
-    #define BTN_ENC                           PE13
-    #define BTN_EN1                           PE8
-    #define BTN_EN2                           PE11
-
-    #define LCD_PINS_ENABLE                   PD13
-    #define LCD_PINS_RS                       PC6
     #define LCD_PINS_D4                     PE14
     #if IS_ULTIPANEL
       #define LCD_PINS_D5                   PE15

@@ -102,7 +102,7 @@ namespace Language_ro {
   PROGMEM Language_Str MSG_MOVE_AXIS                       = _UxGT("Muta Axa");
   PROGMEM Language_Str MSG_BED_LEVELING                    = _UxGT("Nivelarea Patului");
   PROGMEM Language_Str MSG_LEVEL_BED                       = _UxGT("Niveleaza Patul");
-  PROGMEM Language_Str MSG_LEVEL_CORNERS                   = _UxGT("Niveleaza Colturile");
+  PROGMEM Language_Str MSG_BED_TRAMMING                    = _UxGT("Niveleaza Colturile");
   PROGMEM Language_Str MSG_NEXT_CORNER                     = _UxGT("Urmatorul Colt");
   PROGMEM Language_Str MSG_MESH_EDITOR                     = _UxGT("Editor Mesh");
   PROGMEM Language_Str MSG_EDIT_MESH                       = _UxGT("Editeaza Mesh");
@@ -111,7 +111,7 @@ namespace Language_ro {
   PROGMEM Language_Str MSG_MESH_X                          = _UxGT("Index X");
   PROGMEM Language_Str MSG_MESH_Y                          = _UxGT("Index Y");
   PROGMEM Language_Str MSG_MESH_EDIT_Z                     = _UxGT("Valoare Z");
-  PROGMEM Language_Str MSG_USER_MENU                       = _UxGT("Comenzi Personalizate");
+  PROGMEM Language_Str MSG_CUSTOM_COMMANDS                 = _UxGT("Comenzi Personalizate");
   PROGMEM Language_Str MSG_M48_TEST                        = _UxGT("M48 Probe Test");
   PROGMEM Language_Str MSG_M48_POINT                       = _UxGT("M48 Point");
   PROGMEM Language_Str MSG_M48_DEVIATION                   = _UxGT("Deviation");
@@ -232,6 +232,7 @@ namespace Language_ro {
   PROGMEM Language_Str MSG_MOVE_01MM                       = _UxGT("Move 0.1mm");
   PROGMEM Language_Str MSG_MOVE_1MM                        = _UxGT("Move 1mm");
   PROGMEM Language_Str MSG_MOVE_10MM                       = _UxGT("Move 10mm");
+  PROGMEM Language_Str MSG_MOVE_100MM                      = _UxGT("Move 100mm");
   PROGMEM Language_Str MSG_SPEED                           = _UxGT("Speed");
   PROGMEM Language_Str MSG_BED_Z                           = _UxGT("Bed Z");
   PROGMEM Language_Str MSG_NOZZLE                          = _UxGT("Nozzle");
