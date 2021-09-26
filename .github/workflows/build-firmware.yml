@@ -33,6 +33,7 @@ jobs:
     - name: Organize files for upload
       shell: bash
       run: |
+        mkdir -p artifact
         cp .pio/build/mks_robin_nano35/Robin_nano35.bin artifact/elegoo.bin
 
     - name: Publish firmware artifacts
