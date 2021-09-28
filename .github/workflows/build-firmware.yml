@@ -13,11 +13,11 @@ jobs:
     - name: Safety checks
       shell: bash
       run: |
-        PREVENT_COLD_EXTRUSION=$(grep -c '//#define PREVENT_COLD_EXTRUSION' /Marlin/Configuration.h)
-        PREVENT_LENGTHY_EXTRUDE=$(grep -c '//#define PREVENT_LENGTHY_EXTRUDE' /Marlin/Configuration.h)
-        THERMAL_PROTECTION_HOTENDS=$(grep -c '//#define THERMAL_PROTECTION_HOTENDS' /Marlin/Configuration.h)
-        THERMAL_PROTECTION_BED=$(grep -c '//#define THERMAL_PROTECTION_BED' /Marlin/Configuration.h)
-        THERMAL_PROTECTION_CHAMBER=$(grep -c '//#define THERMAL_PROTECTION_CHAMBER' /Marlin/Configuration.h)
+        PREVENT_COLD_EXTRUSION=$(grep -c '//#define PREVENT_COLD_EXTRUSION' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
+        PREVENT_LENGTHY_EXTRUDE=$(grep -c '//#define PREVENT_LENGTHY_EXTRUDE' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
+        THERMAL_PROTECTION_HOTENDS=$(grep -c '//#define THERMAL_PROTECTION_HOTENDS' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
+        THERMAL_PROTECTION_BED=$(grep -c '//#define THERMAL_PROTECTION_BED' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
+        THERMAL_PROTECTION_CHAMBER=$(grep -c '//#define THERMAL_PROTECTION_CHAMBER' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
         FAILED=0
 
         if [[ $PREVENT_COLD_EXTRUSION -ne 0 ]]; then
