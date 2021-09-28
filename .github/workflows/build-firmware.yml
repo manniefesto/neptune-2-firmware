@@ -14,6 +14,9 @@ jobs:
       shell: bash
       run: |
         ls ${GITHUB_WORKSPACE}
+        ls ${GITHUB_WORKSPACE}/Marlin
+
+        grep -c '//#define PREVENT_COLD_EXTRUSION' ${GITHUB_WORKSPACE}/Marlin/Configuration.h
         PREVENT_COLD_EXTRUSION=$(grep -c '//#define PREVENT_COLD_EXTRUSION' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
         PREVENT_LENGTHY_EXTRUDE=$(grep -c '//#define PREVENT_LENGTHY_EXTRUDE' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
         THERMAL_PROTECTION_HOTENDS=$(grep -c '//#define THERMAL_PROTECTION_HOTENDS' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
