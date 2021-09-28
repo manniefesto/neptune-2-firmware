@@ -21,9 +21,9 @@
  */
 #pragma once
 
-#if NOT_TARGET(__STM32F1__)
-  #error "Oops! Select an STM32F1 board in 'Tools > Board.'"
-#elif HOTENDS > 1 || E_STEPPERS > 1
+#include "env_validate.h"
+
+#if HOTENDS > 1 || E_STEPPERS > 1
   #error "MKS Robin Lite only supports one hotend / E-stepper. Comment out this line to continue."
 #endif
 
@@ -143,6 +143,6 @@
 //
 #define SPI_DEVICE                             2
 #define SD_SCK_PIN                          PB13
-#define SD_MISO_PIN                         P1B4
-#define SD_MOSI_PIN                         P1B5
+#define SD_MISO_PIN                         PB14
+#define SD_MOSI_PIN                         PB15
 #define SD_SS_PIN                           PA15

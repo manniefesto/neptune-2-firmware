@@ -76,8 +76,9 @@
   #define INFO_FONT_HEIGHT (INFO_FONT_ASCENT + INFO_FONT_DESCENT)
   #define INFO_FONT_WIDTH   6
 
+  // Graphical LCD uses the menu font size for cursor positioning
   #define LCD_COL_X(col) ((    (col)) * (MENU_FONT_WIDTH))
-  #define LCD_ROW_Y(row) ((1 + (row)) * (MENU_FONT_HEIGHT))
+  #define LCD_ROW_Y(row) ((1 + (row)) * (MENU_LINE_HEIGHT))
 
 #else
 
@@ -94,18 +95,21 @@
   #define LCD_PIXEL_WIDTH   LCD_WIDTH
   #define LCD_PIXEL_HEIGHT  LCD_HEIGHT
 
+  // Character LCD uses direct cursor positioning
   #define LCD_COL_X(col) (col)
   #define LCD_ROW_Y(row) (row)
 
 #endif
 
+#ifndef MENU_LINE_HEIGHT
+  #define MENU_LINE_HEIGHT MENU_FONT_HEIGHT
+#endif
+
 #define LCD_COL_X_RJ(len)      (LCD_PIXEL_WIDTH - LCD_COL_X(len))
-#define LCD_BOTTOM_ROW         (LCD_PIXEL_HEIGHT - 1)
 #define SETCURSOR(col, row)    lcd_moveto(LCD_COL_X(col), LCD_ROW_Y(row))
 #define SETCURSOR_RJ(len, row) lcd_moveto(LCD_COL_X_RJ(len), LCD_ROW_Y(row))
 #define SETCURSOR_X(col)       SETCURSOR(col, _lcdLineNr)
 #define SETCURSOR_X_RJ(len)    SETCURSOR_RJ(len, _lcdLineNr)
-#define START_OF_UTF8_CHAR(C)  (((C) & 0xC0u) != 0x80U)
 
 int lcd_glyph_height();
 
@@ -162,7 +166,7 @@ inline lcd_uint_t lcd_put_u8str_ind_P(const lcd_uint_t col, const lcd_uint_t row
   return lcd_put_u8str_ind_P(pstr, ind, inStr, maxlen);
 }
 
-inline int lcd_put_u8str(const char* str) { return lcd_put_u8str_max(str, PIXEL_LEN_NOLIMIT); }
+inline int lcd_put_u8str(const char *str) { return lcd_put_u8str_max(str, PIXEL_LEN_NOLIMIT); }
 inline int lcd_put_u8str(const lcd_uint_t col, const lcd_uint_t row, PGM_P const str) {
   lcd_moveto(col, row);
   return lcd_put_u8str(str);
@@ -173,3 +177,5 @@ inline int lcd_put_wchar(const lcd_uint_t col, const lcd_uint_t row, const wchar
   lcd_moveto(col, row);
   return lcd_put_wchar(c);
 }
+
+int calculateWidth(PGM_P const pstr);

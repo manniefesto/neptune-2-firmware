@@ -25,11 +25,9 @@
 #if ENABLED(SDSUPPORT)
 
 #include "../gcode.h"
+#include "../../module/planner.h"
 #include "../../module/printcounter.h"
-
-#if DISABLED(NO_SD_AUTOSTART)
-  #include "../../sd/cardreader.h"
-#endif
+#include "../../sd/cardreader.h"
 
 #ifdef SD_FINISHED_RELEASECOMMAND
   #include "../queue.h"
@@ -64,6 +62,11 @@
  * M1001: Execute actions for SD print completion
  */
 void GcodeSuite::M1001() {
+  planner.synchronize();
+
+  // SD Printing is finished when the queue reaches M1001
+  card.flag.sdprinting = card.flag.sdprintdone = false;
+
   // If there's another auto#.g file to run...
   if (TERN(NO_SD_AUTOSTART, false, card.autofile_check())) return;
 
@@ -82,7 +85,7 @@ void GcodeSuite::M1001() {
 
   // Announce SD file completion
   {
-    PORT_REDIRECT(SERIAL_ALL);
+    PORT_REDIRECT(SerialMask::All);
     SERIAL_ECHOLNPGM(STR_FILE_PRINTED);
   }
 

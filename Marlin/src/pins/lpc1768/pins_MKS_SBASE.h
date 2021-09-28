@@ -25,11 +25,7 @@
  * MKS SBASE pin assignments
  */
 
-#if defined(MKS_HAS_LPC1769) && NOT_TARGET(MCU_LPC1769)
-  #error "Oops! Make sure you have the LPC1769 environment selected in your IDE."
-#elif !defined(MKS_HAS_LPC1769) && NOT_TARGET(MCU_LPC1768)
-  #error "Oops! Make sure you have the LPC1768 environment selected in your IDE."
-#endif
+#include "env_validate.h"
 
 #ifndef BOARD_INFO_NAME
   #define BOARD_INFO_NAME   "MKS SBASE"
@@ -140,9 +136,17 @@
 #endif
 
 //
-// Misc. Functions
+// Power Supply Control
 //
-#define PS_ON_PIN                          P0_25  // TH3 Connector
+#if ENABLED(PSU_CONTROL)                          // MKSPWC
+  #ifndef PS_ON_PIN
+    #define PS_ON_PIN                      P0_25  // SERVO
+  #endif
+  #ifndef KILL_PIN
+    #define KILL_PIN                       P1_29  // Z+
+    #define KILL_PIN_STATE                  HIGH
+  #endif
+#endif
 
 //
 // Ethernet pins

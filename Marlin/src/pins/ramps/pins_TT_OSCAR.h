@@ -19,10 +19,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
+#pragma once
 
-#if NOT_TARGET(__AVR_ATmega1280__, __AVR_ATmega2560__)
-  #error "Oops! Select 'Arduino/Genuino Mega or Mega 2560' in 'Tools > Board.'"
-#endif
+#include "env_validate.h"
 
 #if HOTENDS > 5 || E_STEPPERS > 5
   #error "TTOSCAR supports up to 5 hotends / E-steppers. Comment out this line to continue."
@@ -182,11 +181,11 @@
   #define TEMP_4_PIN                          12
 #endif
 
-// SPI for Max6675 or Max31855 Thermocouple
+// SPI for MAX Thermocouple
 //#if DISABLED(SDSUPPORT)
-//  #define MAX6675_SS_PIN   66   // Don't use 53 if using Display/SD card
+//  #define TEMP_0_CS_PIN    66   // Don't use 53 if using Display/SD card
 //#else
-//  #define MAX6675_SS_PIN   66   // Don't use 49 (SD_DETECT_PIN)
+//  #define TEMP_0_CS_PIN    66   // Don't use 49 (SD_DETECT_PIN)
 //#endif
 
 //
