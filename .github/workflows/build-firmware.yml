@@ -35,6 +35,11 @@ jobs:
       run: |
         mkdir -p artifact
         cp .pio/build/mks_robin_nano35/Robin_nano35.bin artifact/elegoo.bin
+        if [ -d ".pio/build/mks_robin_nano35/assets" ] 
+        then
+            mkdir -p artifact/assets
+            cp -r .pio/build/mks_robin_nano35/assets artifact/
+        fi
 
     - name: Publish firmware artifacts
       uses: actions/upload-artifact@v2
