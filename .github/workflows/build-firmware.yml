@@ -13,11 +13,14 @@ jobs:
     - name: Safety checks
       shell: bash
       run: |
+        echo ${GITHUB_WORKSPACE}
+        echo testing
         PREVENT_COLD_EXTRUSION=$(grep -c '//#define PREVENT_COLD_EXTRUSION' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
         PREVENT_LENGTHY_EXTRUDE=$(grep -c '//#define PREVENT_LENGTHY_EXTRUDE' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
         THERMAL_PROTECTION_HOTENDS=$(grep -c '//#define THERMAL_PROTECTION_HOTENDS' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
         THERMAL_PROTECTION_BED=$(grep -c '//#define THERMAL_PROTECTION_BED' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
         THERMAL_PROTECTION_CHAMBER=$(grep -c '//#define THERMAL_PROTECTION_CHAMBER' ${GITHUB_WORKSPACE}/Marlin/Configuration.h)
+        echo Vars set
         FAILED=0
 
         if [[ $PREVENT_COLD_EXTRUSION -ne 0 ]]; then
