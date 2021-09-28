@@ -4,9 +4,12 @@ This firmware will work on the *1.0.3* version of the Neptune 2 only.
 
 This is the firmware source code that Elegoo support provided for me when I asked after some of the Marlin features that where not turned on in the stock version.
 
-It seems that it is not 100% stock as the TFT images and options are different, however it does complie and run on the MKS Robin Nano main board that the printer uses.
+It seems that it is not 100% stock as the TFT images and options are different, however it does compile and run on the MKS Robin Nano main board that the printer uses.
 
 This project is not completed. Here is a todo list.
+
+# Disclaimer
+This firmware comes with no warranty or support, use at your own risk.
 
 # Todo:
 * Create video explaining both build options
