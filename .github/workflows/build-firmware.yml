@@ -22,23 +22,23 @@ jobs:
 
         if [[ $PREVENT_COLD_EXTRUSION -ne 0 ]]; then
             FAILED=1
-            echo "PREVENT_COLD_EXTRUSION is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety"
+            echo PREVENT_COLD_EXTRUSION is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety
         fi
         if [[ $PREVENT_LENGTHY_EXTRUDE -ne 0 ]] ; then
             FAILED=1
-            echo "PREVENT_LENGTHY_EXTRUDE is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety"
+            echo PREVENT_LENGTHY_EXTRUDE is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety
         fi
         if [[ $THERMAL_PROTECTION_HOTENDS -ne 0 ]]; then
             FAILED=1
-            echo "THERMAL_PROTECTION_HOTENDS is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety"
+            echo THERMAL_PROTECTION_HOTENDS is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety
         fi
         if [[ $THERMAL_PROTECTION_BED -ne 0 ]]; then
             FAILED=1
-            echo "THERMAL_PROTECTION_BED is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety"
+            echo THERMAL_PROTECTION_BED is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety
         fi
         if [[ $THERMAL_PROTECTION_CHAMBER -ne 0 ]]; then
             FAILED=1
-            echo "THERMAL_PROTECTION_CHAMBER is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety"
+            echo THERMAL_PROTECTION_CHAMBER is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety
         fi
 
         if [[ $FAILED -eq 1 ]]; then
