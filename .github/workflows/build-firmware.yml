@@ -13,6 +13,7 @@ jobs:
     - name: Safety checks
       shell: bash
       run: |
+      echo Checking for disabled saftey features
         FAILED=0
 
         if [[ $(grep -c '//#define PREVENT_COLD_EXTRUSION' ${GITHUB_WORKSPACE}/Marlin/Configuration.h) -ne 0 ]]; then
