@@ -9,6 +9,38 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Safety checks
+      shell: bash
+      run: |
+        echo "Checking for disabled saftey features"
+        FAILED=0
+
+        if [[ $(grep -c '//#define PREVENT_COLD_EXTRUSION' ${GITHUB_WORKSPACE}/Marlin/Configuration.h) -ne 0 ]]; then
+            FAILED=1
+            echo "PREVENT_COLD_EXTRUSION is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety"
+        fi
+        if [[ $(grep -c '//#define PREVENT_LENGTHY_EXTRUDE' ${GITHUB_WORKSPACE}/Marlin/Configuration.h) -ne 0 ]] ; then
+            FAILED=1
+            echo "PREVENT_LENGTHY_EXTRUDE is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety"
+        fi
+        if [[ $(grep -c '//#define THERMAL_PROTECTION_HOTENDS' ${GITHUB_WORKSPACE}/Marlin/Configuration.h) -ne 0 ]]; then
+            FAILED=1
+            echo "THERMAL_PROTECTION_HOTENDS is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety"
+        fi
+        if [[ $(grep -c '//#define THERMAL_PROTECTION_BED' ${GITHUB_WORKSPACE}/Marlin/Configuration.h) -ne 0 ]]; then
+            FAILED=1
+            echo "THERMAL_PROTECTION_BED is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety"
+        fi
+        if [[ $(grep -c '//#define THERMAL_PROTECTION_CHAMBER' ${GITHUB_WORKSPACE}/Marlin/Configuration.h) -ne 0 ]]; then
+            FAILED=1
+            echo "THERMAL_PROTECTION_CHAMBER is not defined, see: https://marlinfw.org/docs/configuration/configuration.html#safety"
+        fi
+
+        if [[ $FAILED -eq 1 ]]; then
+            exit 1
+        fi
+
     - name: Cache pip
       uses: actions/cache@v2
       with:
@@ -16,17 +48,21 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
+
     - name: Cache PlatformIO
       uses: actions/cache@v2
       with:
         path: ~/.platformio
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
     - name: Set up Python
       uses: actions/setup-python@v2
+
     - name: Install PlatformIO
       run: |
         python -m pip install --upgrade pip
         pip install --upgrade platformio
+
     - name: Run PlatformIO
       run: pio run -e mks_robin_nano35
 
@@ -34,9 +70,12 @@ jobs:
       shell: bash
       run: |
         mkdir -p artifact
-        mkdir -p artifact/assets
         cp .pio/build/mks_robin_nano35/Robin_nano35.bin artifact/elegoo.bin
-        cp -r .pio/build/mks_robin_nano35/assets artifact/
+        if [ -d ".pio/build/mks_robin_nano35/assets" ] 
+        then
+            mkdir -p artifact/assets
+            cp -r .pio/build/mks_robin_nano35/assets artifact/
+        fi
 
     - name: Publish firmware artifacts
       uses: actions/upload-artifact@v2

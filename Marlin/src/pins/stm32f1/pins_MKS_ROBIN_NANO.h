@@ -22,7 +22,7 @@
 #pragma once
 
 /**
- * MKS Robin nano (STM32F130VET6) board pin assignments
+ * MKS Robin nano (STM32F103VET6) board pin assignments
  * https://github.com/makerbase-mks/MKS-Robin-Nano-V1.X/tree/master/hardware
  */
 
@@ -37,7 +37,7 @@
 #define BOARD_NO_NATIVE_USB
 
 // Avoid conflict with TIMER_SERVO when using the STM32 HAL
-#define TEMP_TIMER 5
+#define TEMP_TIMER                             5
 
 //
 // Release PB4 (Y_ENABLE_PIN) from JTAG NRST role
@@ -99,31 +99,13 @@
 #define TEMP_1_PIN                          PC2   // TH2
 #define TEMP_BED_PIN                        PC0   // TB1
 
-#if HAS_TMC_UART
-
-  #define X_SERIAL_TX_PIN                   PA10
-  #define X_SERIAL_RX_PIN                   PA10
-
-  #define Y_SERIAL_TX_PIN                   PA9
-  #define Y_SERIAL_RX_PIN                   PA9
-
-  #define Z_SERIAL_TX_PIN                   PC7
-  #define Z_SERIAL_RX_PIN                   PC7
-
-  #define E0_SERIAL_TX_PIN                  PC13
-  #define E0_SERIAL_RX_PIN                  PC13
-
-  // Reduce baud rate to improve software serial reliability
-  #define TMC_BAUD_RATE                    115200
-#endif // HAS_TMC_UART
-
 //
 // Heaters / Fans
 //
 #ifndef HEATER_0_PIN
   #define HEATER_0_PIN                      PC3
 #endif
-#if HOTENDS == 1
+#if HOTENDS == 1 && DISABLED(HEATERS_PARALLEL)
   #ifndef FAN1_PIN
     #define FAN1_PIN                        PB0
   #endif
@@ -142,38 +124,32 @@
 //
 // Thermocouples
 //
-//#define MAX6675_SS_PIN                    PE5   // TC1 - CS1
-//#define MAX6675_SS_PIN                    PE6   // TC2 - CS2
+//#define TEMP_0_CS_PIN                     PE5   // TC1 - CS1
+//#define TEMP_0_CS_PIN                     PE6   // TC2 - CS2
+
+//
+// Power Supply Control
+//
+#if ENABLED(PSU_CONTROL)                          // MKSPWC
+  #if HAS_TFT_LVGL_UI
+    #error "PSU_CONTROL cannot be used with TFT_LVGL_UI. Disable PSU_CONTROL to continue."
+  #endif
+  #ifndef PS_ON_PIN
+    #define PS_ON_PIN                       PB2   // SUICIDE
+  #endif
+  #ifndef KILL_PIN
+    #define KILL_PIN                        PA2
+    #define KILL_PIN_STATE                  HIGH
+  #endif
+#else
+  #define SUICIDE_PIN                       PB2
+  #define SUICIDE_PIN_INVERTING            false
+#endif
 
 //
 // Misc. Functions
 //
 #if HAS_TFT_LVGL_UI
-  // LVGL
-  #ifndef TOUCH_CALIBRATION_X
-    #define TOUCH_CALIBRATION_X             17880
-  #endif
-  #ifndef TOUCH_CALIBRATION_Y
-    #define TOUCH_CALIBRATION_Y            -12234
-  #endif
-  #ifndef TOUCH_OFFSET_X
-    #define TOUCH_OFFSET_X                    -45
-  #endif
-  #ifndef TOUCH_OFFSET_Y
-    #define TOUCH_OFFSET_Y                    349
-  #endif
-  #ifndef TOUCH_ORIENTATION
-    #define TOUCH_ORIENTATION    TOUCH_LANDSCAPE
-  #endif
-
-  //#define MKSPWC
-  #ifdef MKSPWC
-    #define SUICIDE_PIN                     PB2   // Enable MKSPWC SUICIDE PIN
-    #define SUICIDE_PIN_INVERTING          false  // Enable MKSPWC PIN STATE
-    #define KILL_PIN                        PA2   // Enable MKSPWC DET PIN
-    #define KILL_PIN_STATE                  true  // Enable MKSPWC PIN STATE
-  #endif
-
   #define MT_DET_1_PIN                      PA4   // LVGL UI FILAMENT RUNOUT1 PIN
   #define MT_DET_2_PIN                      PE6   // LVGL UI FILAMENT RUNOUT2 PIN
   #define MT_DET_PIN_INVERTING             false  // LVGL UI filament RUNOUT PIN STATE
@@ -182,10 +158,10 @@
   #define WIFI_IO1_PIN                      PC7   // MKS ESP WIFI IO1 PIN
   #define WIFI_RESET_PIN                    PA5   // MKS ESP WIFI RESET PIN
 #else
-  #define POWER_LOSS_PIN                  PE6   // PW_DET
-  #define PS_ON_PIN                       PB2   // PW_OFF
-  #define FIL_RUNOUT_PIN                    PA2
-  #define FIL_RUNOUT2_PIN                   PA4
+  //#define POWER_LOSS_PIN                  PA2   // PW_DET
+  //#define PS_ON_PIN                       PB2   // PW_OFF
+  #define FIL_RUNOUT_PIN                    PA4
+  #define FIL_RUNOUT2_PIN                   PE6
 #endif
 
 //#define LED_PIN                           PB2
@@ -198,7 +174,7 @@
 #endif
 
 #define SDIO_SUPPORT
-#define SDIO_CLOCK                       18000000  // 6.0 MHz
+#define SDIO_CLOCK                       4500000  // 4.5 MHz
 #define SD_DETECT_PIN                       PD12
 #define ONBOARD_SD_CS_PIN                   PC11
 
@@ -207,13 +183,18 @@
 //
 #define BEEPER_PIN                          PC5
 
-/**
- * Note: MKS Robin TFT screens use various TFT controllers.
- * If the screen stays white, disable 'TFT_RESET_PIN'
- * to let the bootloader init the screen.
- */
-// Shared FSMC Configs
+//
+// TFT with FSMC interface
+//
 #if HAS_FSMC_TFT
+  /**
+   * Note: MKS Robin TFT screens use various TFT controllers.
+   * If the screen stays white, disable 'TFT_RESET_PIN'
+   * to let the bootloader init the screen.
+   */
+  #define TFT_RESET_PIN                     PC6   // FSMC_RST
+  #define TFT_BACKLIGHT_PIN                 PD13
+
   #define DOGLCD_MOSI                       -1    // Prevent auto-define by Conditionals_post.h
   #define DOGLCD_SCK                        -1
 
@@ -221,9 +202,6 @@
   #define TOUCH_SCK_PIN                     PB13  // SPI2_SCK
   #define TOUCH_MISO_PIN                    PB14  // SPI2_MISO
   #define TOUCH_MOSI_PIN                    PB15  // SPI2_MOSI
-
-  #define TFT_RESET_PIN                     PC6   // FSMC_RST
-  #define TFT_BACKLIGHT_PIN                 PD13
 
   #define LCD_USE_DMA_FSMC                        // Use DMA transfers to send data to the TFT
   #define FSMC_CS_PIN                       PD7

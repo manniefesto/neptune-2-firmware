@@ -62,7 +62,6 @@ namespace Language_de {
   PROGMEM Language_Str MSG_AUTO_HOME_Y                     = _UxGT("Home Y");
   PROGMEM Language_Str MSG_AUTO_HOME_Z                     = _UxGT("Home Z");
   PROGMEM Language_Str MSG_AUTO_Z_ALIGN                    = _UxGT("Z-Achsen ausgleichen");
-  PROGMEM Language_Str MSG_ASSISTED_TRAMMING               = _UxGT("Bett ausrichten"); // Bettausrichtung
   PROGMEM Language_Str MSG_LEVEL_BED_HOMING                = _UxGT("XYZ homen");
   PROGMEM Language_Str MSG_LEVEL_BED_WAITING               = _UxGT("Klick zum Starten");
   PROGMEM Language_Str MSG_LEVEL_BED_NEXT_POINT            = _UxGT("Nächste Koordinate");
@@ -103,7 +102,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_MOVE_AXIS                       = _UxGT("Achsen bewegen");
   PROGMEM Language_Str MSG_BED_LEVELING                    = _UxGT("Bett-Nivellierung");
   PROGMEM Language_Str MSG_LEVEL_BED                       = _UxGT("Bett nivellieren");
-  PROGMEM Language_Str MSG_LEVEL_CORNERS                   = _UxGT("Ecken nivellieren");
+  PROGMEM Language_Str MSG_BED_TRAMMING                    = _UxGT("Bett ausrichten");
   PROGMEM Language_Str MSG_NEXT_CORNER                     = _UxGT("Nächste Ecke");
   PROGMEM Language_Str MSG_MESH_EDITOR                     = _UxGT("Netz Editor");
   PROGMEM Language_Str MSG_EDIT_MESH                       = _UxGT("Netz bearbeiten");
@@ -112,7 +111,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_MESH_X                          = _UxGT("Index X");
   PROGMEM Language_Str MSG_MESH_Y                          = _UxGT("Index Y");
   PROGMEM Language_Str MSG_MESH_EDIT_Z                     = _UxGT("Z-Wert");
-  PROGMEM Language_Str MSG_USER_MENU                       = _UxGT("Benutzer-Menü");
+  PROGMEM Language_Str MSG_CUSTOM_COMMANDS                 = _UxGT("Benutzer-Menü");
   PROGMEM Language_Str MSG_M48_TEST                        = _UxGT("M48 Sondentest");
   PROGMEM Language_Str MSG_M48_POINT                       = _UxGT("M48 Punkt");
   PROGMEM Language_Str MSG_M48_OUT_OF_BOUNDS               = _UxGT("Zu weit draußen");
@@ -231,9 +230,10 @@ namespace Language_de {
   PROGMEM Language_Str MSG_MOVE_EN                         = _UxGT("Bewege Extruder *");
   PROGMEM Language_Str MSG_HOTEND_TOO_COLD                 = _UxGT("Hotend zu kalt");
   PROGMEM Language_Str MSG_MOVE_N_MM                       = _UxGT(" %s mm");
-  PROGMEM Language_Str MSG_MOVE_01MM                       = _UxGT(" 0,1   mm");
-  PROGMEM Language_Str MSG_MOVE_1MM                        = _UxGT(" 1,0   mm");
-  PROGMEM Language_Str MSG_MOVE_10MM                       = _UxGT("10,0   mm");
+  PROGMEM Language_Str MSG_MOVE_01MM                       = _UxGT("  0,1  mm");
+  PROGMEM Language_Str MSG_MOVE_1MM                        = _UxGT("  1,0  mm");
+  PROGMEM Language_Str MSG_MOVE_10MM                       = _UxGT(" 10,0  mm");
+  PROGMEM Language_Str MSG_MOVE_100MM                      = _UxGT("100,0  mm");
   PROGMEM Language_Str MSG_SPEED                           = _UxGT("Geschw.");
   PROGMEM Language_Str MSG_BED_Z                           = _UxGT("Bett Z");
   PROGMEM Language_Str MSG_NOZZLE                          = _UxGT("Düse");

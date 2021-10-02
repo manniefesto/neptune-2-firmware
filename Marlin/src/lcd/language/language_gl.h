@@ -103,7 +103,7 @@ namespace Language_gl {
   PROGMEM Language_Str MSG_MOVE_AXIS                       = _UxGT("Mover eixe");
   PROGMEM Language_Str MSG_BED_LEVELING                    = _UxGT("Nivelando Cama");
   PROGMEM Language_Str MSG_LEVEL_BED                       = _UxGT("Nivelar Cama");
-  PROGMEM Language_Str MSG_LEVEL_CORNERS                   = _UxGT("Nivelar Cantos");
+  PROGMEM Language_Str MSG_BED_TRAMMING                    = _UxGT("Nivelar Cantos");
   PROGMEM Language_Str MSG_NEXT_CORNER                     = _UxGT("Seguinte Canto");
   PROGMEM Language_Str MSG_MESH_EDITOR                     = _UxGT("Editor Mallado");
   PROGMEM Language_Str MSG_EDIT_MESH                       = _UxGT("Editar Mallado");
@@ -112,7 +112,7 @@ namespace Language_gl {
   PROGMEM Language_Str MSG_MESH_X                          = _UxGT("Índice X");
   PROGMEM Language_Str MSG_MESH_Y                          = _UxGT("Índice Y");
   PROGMEM Language_Str MSG_MESH_EDIT_Z                     = _UxGT("Valor Z");
-  PROGMEM Language_Str MSG_USER_MENU                       = _UxGT("Comandos Personaliz.");
+  PROGMEM Language_Str MSG_CUSTOM_COMMANDS                 = _UxGT("Comandos Personaliz.");
   PROGMEM Language_Str MSG_M48_TEST                        = _UxGT("M48 Probar Sonda");
   PROGMEM Language_Str MSG_M48_POINT                       = _UxGT("M48 Punto");
   PROGMEM Language_Str MSG_M48_DEVIATION                   = _UxGT("Desviación");
@@ -233,6 +233,7 @@ namespace Language_gl {
   PROGMEM Language_Str MSG_MOVE_01MM                       = _UxGT("Mover 0.1mm");
   PROGMEM Language_Str MSG_MOVE_1MM                        = _UxGT("Mover 1mm");
   PROGMEM Language_Str MSG_MOVE_10MM                       = _UxGT("Mover 10mm");
+  PROGMEM Language_Str MSG_MOVE_100MM                      = _UxGT("Mover 100mm");
   PROGMEM Language_Str MSG_SPEED                           = _UxGT("Velocidade");
   PROGMEM Language_Str MSG_BED_Z                           = _UxGT("Cama Z");
   PROGMEM Language_Str MSG_NOZZLE                          = _UxGT("Bico");
