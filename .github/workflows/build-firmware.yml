@@ -64,17 +64,17 @@ jobs:
         pip install --upgrade platformio
 
     - name: Run PlatformIO
-      run: pio run -e mks_robin_v1_3_f4
+      run: pio run -e mks_robin_nano_v1_3_f4
 
     - name: Organize files for upload
       shell: bash
       run: |
         mkdir -p artifact
-        cp .pio/build/mks_robin_v1_3_f4/Robin_nano35.bin artifact/elegoo.bin
-        if [ -d ".pio/build/mks_robin_v1_3_f4/assets" ] 
+        cp .pio/build/mks_robin_nano_v1_3_f4/Robin_nano35.bin artifact/elegoo.bin
+        if [ -d ".pio/build/mks_robin_nano_v1_3_f4/assets" ] 
         then
             mkdir -p artifact/assets
-            cp -r .pio/build/mks_robin_v1_3_f4/assets artifact/
+            cp -r .pio/build/mks_robin_nano_v1_3_f4/assets artifact/
         fi
 
     - name: Publish firmware artifacts
